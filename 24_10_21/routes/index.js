@@ -1,12 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Main page' });
+router.get('/', function (req, res, next) {
+    res.render('index', {title: 'Strona główna'});
 });
 
-router.get('/about', async function(req, res, next) {
+router.get('/o-nas', async function (req, res, next) {
     var fs = require('fs/promises');
     var images = await fs.readdir('static');
     images = images.filter(function (image) {
@@ -14,15 +13,20 @@ router.get('/about', async function(req, res, next) {
     });
     // log type of images element
     console.log(typeof images[0]);
-    res.render('about', { title: 'About', images: images });
+    res.render('about', {title: 'O nas', images: images});
 });
 
-router.get('/contact', function(req, res, next) {
-    res.render('contact', { title: 'Contact' });
+router.get('/kontakt', function (req, res, next) {
+    res.render('contact', {title: 'Kontakt'});
 });
 
-router.get('/services', function(req, res, next) {
-    res.render('services', { title: 'Services' });
+router.get('/oferta', function (req, res, next) {
+    res.render('services', {title: 'Oferta'});
+});
+
+router.post('/action', function (req, res, next) {
+    console.log(req.body);
+    res.redirect('/');
 });
 
 module.exports = router;
