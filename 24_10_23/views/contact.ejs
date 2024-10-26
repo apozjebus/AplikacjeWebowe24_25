@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/style.css' />
+  </head>
+  <body>
+    <%- include('menu') %>
+    <main>
+      <h1><%= title %></h1>
+      <p>Strona kontaktowa</p>
+      <form action="/contact" method="post">
+        <label for="name">Imię:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="surname">Nazwisko:</label>
+        <input type="text" id="surname" name="surname" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="message">Wiadomość:</label>
+        <textarea id="message" name="message" required></textarea>
+        <button type="submit">Wyślij</button>
+      </form>
+    </main>
+    <%- include('footer') %>
+  </body>
+</html>

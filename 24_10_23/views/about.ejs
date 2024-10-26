@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel='stylesheet' href='/style.css' />
+    </head>
+    <body>
+        <%- include('menu') %>
+        <main>
+            <p>Strona o nas</p>
+            <div id="container">
+                <script src="/javascripts/script.js"></script>
+                <script>
+                    generateGallery(<%- JSON.stringify(images) %>);
+                </script>
+            </div>
+        </main>
+        <%- include('footer') %>
+    </body>
+</html>

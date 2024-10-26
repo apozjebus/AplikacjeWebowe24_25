@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/style.css' />
+  </head>
+  <body>
+    <%- include('menu') %>
+    <main>
+      <h1><%= title %></h1>
+      <p>Strona oferty</p>
+        <table>
+            <tr>
+                <th>Produkt</th>
+                <th>Cena</th>
+            </tr>
+            <tr>
+                <td>Produkt 1</td>
+                <td>100zł</td>
+            </tr>
+            <tr>
+                <td>Produkt 2</td>
+                <td>200zł</td>
+            </tr>
+            <tr>
+                <td>Produkt 3</td>
+                <td>300zł</td>
+            </tr>
+        </table>
+    </main>
+    <%- include('footer') %>
+  </body>
+</html>
