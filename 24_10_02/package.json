@@ -1,0 +1,17 @@
+{
+  "name": "24_10_02",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@types/node": "^22.7.4",
+    "mime": "^4.0.4",
+    "mime-types": "^2.1.35"
+  }
+}
