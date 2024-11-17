@@ -1,5 +1,7 @@
 var express = require('express');
+const fs = require("fs/promises");
 var router = express.Router();
+const path = require('path');
 
 router.get('/', function (req, res, next) {
     res.render('index', {title: 'Strona główna'});
@@ -7,11 +9,10 @@ router.get('/', function (req, res, next) {
 
 router.get('/o-nas', async function (req, res, next) {
     var fs = require('fs/promises');
-    var images = await fs.readdir('static');
+    var images = await fs.readdir(path.join(__dirname, '../static'));
     images = images.filter(function (image) {
         return image.startsWith('ematilore');
     });
-    // log type of images element
     console.log(typeof images[0]);
     res.render('about', {title: 'O nas', images: images});
 });

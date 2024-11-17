@@ -21,11 +21,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'static')));
 
 app.use('/', indexRouter);
-app.use('/o-nas', indexRouter);
-app.use('/kontakt', indexRouter);
-app.use('/oferta', indexRouter);
-app.use('/action', indexRouter);
-app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

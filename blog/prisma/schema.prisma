@@ -14,10 +14,10 @@ datasource db {
 }
 
 model Wpis {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   tytul     String
   tresc     String
-  data      DateTime
+  data      DateTime  @default(now())
   autor     String
   kategoriaId Int
   kategoria Kategorie @relation(fields: [kategoriaId], references: [id])
@@ -34,7 +34,7 @@ model Kategorie {
 model Komentarz {
   id        Int      @id @default(autoincrement())
   tresc     String
-  data      DateTime
+  data      DateTime @default(now())
   autor     String
   wpisId    Int
   Wpis      Wpis     @relation(fields: [wpisId], references: [id])
