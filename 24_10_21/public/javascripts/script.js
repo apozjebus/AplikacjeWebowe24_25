@@ -10,7 +10,7 @@ function generateGallery(images) {
         div.classList.add('numbertext');
         div.innerHTML = counter + ' / ' + images.length;
         var img = document.createElement('img');
-        img.src = image;
+        img.src = '/static/' + image;
         img.style.width = '500px';
         var caption = document.createElement('div');
         caption.classList.add('text');
