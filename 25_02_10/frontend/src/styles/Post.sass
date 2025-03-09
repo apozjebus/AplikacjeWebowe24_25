@@ -1,16 +1,87 @@
-#post>p
-    width: auto
-    text-align: center
-    padding: 2em
-    margin: 0
-    color: #474448
-#post>h1
-    color: #474448
-    text-align: center
-    padding: 1em
-    margin: 0
-#post>h3
-    color: #474448
-    text-align: center
-    padding: 1em
-    margin: 0
+#post
+  display: flex
+  flex-direction: column
+  margin: 0 auto
+  padding: 1rem
+  width: 100%
+  max-width: 800px
+  h2
+    font-size: 1.5rem
+    margin-bottom: 0.5rem
+  p
+    font-size: 1rem
+    line-height: 1.5
+  #post-content
+    background-color: #f1f0ea
+    padding: 1rem
+    border-radius: 8px
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1)
+    transition: box-shadow 0.3s ease
+    width: 100%
+    margin-bottom: 10px
+    &:hover
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2)
+    h3
+      font-size: 1.25rem
+      margin-bottom: 0.5rem
+    p
+      font-size: 1rem
+      line-height: 1.5
+  #comments
+    background-color: #f1f0ea
+    padding: 1rem
+    border-radius: 8px
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1)
+    transition: box-shadow 0.3s ease
+    width: 100%
+    &:hover
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2)
+    h3
+      font-size: 1.25rem
+      margin-bottom: 0.5rem
+    p
+      font-size: 1rem
+      line-height: 1.5
+    ul
+      margin: 0
+      padding: 0
+      list-style: none
+      width: 100%
+      li
+        margin-bottom: 1rem
+        padding: 1rem
+        background-color: #f1f0ea
+        border-radius: 8px
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1)
+        transition: box-shadow 0.3s ease
+        &:hover
+          box-shadow: 0 4px 8px rgba(0,0,0,0.2)
+        h4
+          font-size: 1.25rem
+          margin-bottom: 0.5rem
+        p
+          font-size: 1rem
+          line-height: 1.5
+    form
+      display: flex
+      flex-direction: column
+      margin-top: 1rem
+      input[type="text"]
+        padding: 0.5rem
+        border-radius: 8px
+        border: 1px solid #ccc
+        margin-bottom: 1rem
+        font-size: 1rem
+      textarea
+        padding: 0.5rem
+        border-radius: 8px
+        border: 1px solid #ccc
+        margin-bottom: 1rem
+        font-size: 1rem
+      button[type="submit"]
+        background-color: #474448
+        color: #e0ddcf
+        padding: 0.5rem 1rem
+        border-radius: 8px
+        border: none
+        cursor: pointer

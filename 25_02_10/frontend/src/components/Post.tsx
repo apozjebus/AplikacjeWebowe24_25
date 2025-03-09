@@ -1,39 +1,131 @@
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import "../styles/Post.sass";
 
+interface Post {
+  id: number;
+  tytul: string;
+  tresc: string;
+  data: string;
+  autor: string;
+  kategoriaId: string;
+  zdjecie: string;
+}
+
+interface Comment {
+  id: number;
+  tresc: string;
+  data: string;
+  autor: string;
+  wpisId: number;
+}
+
 function Post() {
+  const { postId } = useParams<{ postId: string }>();
+  const [post, setPost] = useState<Post | null>(null);
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        setIsLoading(true);
+
+        const response = await fetch(`http://localhost:3000/wpis/${postId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch post");
+        }
+        const data = await response.json();
+        setPost(data);
+
+        const commentsResponse = await fetch(
+          `http://localhost:3000/komentarze/${postId}`,
+        );
+        if (!commentsResponse.ok) {
+          throw new Error("Failed to fetch comments");
+        }
+        const comments = await commentsResponse.json();
+        setComments(comments);
+
+        setError(null);
+      } catch (error) {
+        setError("Error fetching post");
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPost();
+  }, [postId]);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const data = {
+      tresc: formData.get("tresc") as string,
+      autor: formData.get("autor") as string,
+      wpisId: postId,
+    };
+
+    try {
+      const response = await fetch("http://localhost:3000/komentarz", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit comment");
+      }
+
+      const newComment = await response.json();
+      setComments((prevComments) => [...prevComments, newComment]);
+    } catch (error) {
+      console.error("Error submitting comment:", error);
+    }
+  };
+
   return (
     <div id="post">
-      <h1>Artykuł 1</h1>
-      <h3>Opis artykułu 1</h3>
-      <p>
-        {" "}
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempor
-        lorem non venenatis commodo. In hac habitasse platea dictumst. In
-        lobortis mattis euismod. Vivamus posuere nunc nec libero efficitur
-        tincidunt ut nec sapien. Suspendisse non justo semper, iaculis nisi nec,
-        vestibulum elit. Vivamus faucibus sed leo et dapibus. Nulla ullamcorper
-        quam et lectus aliquet, mattis ultrices nibh commodo. Duis at bibendum
-        nibh. Fusce eu ex mauris. Morbi molestie ante risus, vel gravida enim
-        lacinia sed. Aliquam tincidunt mauris velit, eget efficitur tellus
-        sollicitudin id. Orci varius natoque penatibus et magnis dis parturient
-        montes, nascetur ridiculus mus. Proin in maximus elit. In eget felis
-        ligula. Suspendisse hendrerit metus sed ligula ultrices rhoncus. Integer
-        ex metus, semper ut lorem ac, aliquam pulvinar turpis.{" "}
-      </p>
-      <img src="https://via.placeholder.com/150" alt="Placeholder" />
-      <p>
-        Quisque porttitor imperdiet erat, bibendum facilisis tortor pulvinar
-        eget. Fusce felis risus, pretium sed volutpat sit amet, eleifend sed
-        orci. Phasellus varius lacinia diam, ut vehicula lorem molestie vitae.
-        Maecenas ut tellus quis lacus feugiat vulputate. Mauris convallis
-        ultrices lorem, nec lobortis neque blandit sit amet. Interdum et
-        malesuada fames ac ante ipsum primis in faucibus. Aliquam lobortis
-        ullamcorper commodo. Praesent ornare neque et orci faucibus, non euismod
-        lacus feugiat. Aliquam pellentesque tellus eget dui aliquam, et
-        vulputate ex malesuada. Suspendisse pulvinar volutpat purus, et lobortis
-        tortor vulputate et. Morbi tincidunt dolor eu ante eleifend pharetra.
-        Vivamus fringilla efficitur ex eget laoreet.
-      </p>
+      <div id="post-content">
+        {isLoading ? (
+          <p>Loading post...</p>
+        ) : error ? (
+          <p>{error}</p>
+        ) : (
+          <div>
+            <h2>{post?.tytul}</h2>
+            <img src={post?.zdjecie} alt={post?.tytul} />
+            <p>{post?.tresc}</p>
+            <p>Author: {post?.autor}</p>
+          </div>
+        )}
+      </div>
+      <div id="comments">
+        <h3>Comments</h3>
+        <form onSubmit={handleSubmit}>
+          <input type="hidden" name="wpisId" value={postId} />
+          <input type="text" name="tresc" placeholder="Your comment" required />
+          <input type="text" name="autor" placeholder="Your name" required />
+          <button type="submit">Add Comment</button>
+        </form>
+        {comments.length > 0 ? (
+          <ul>
+            {comments.map((comment) => (
+              <li key={comment.id}>
+                <p>{comment.tresc}</p>
+                <p>Author: {comment.autor}</p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No comments yet.</p>
+        )}
+      </div>
     </div>
   );
 }
