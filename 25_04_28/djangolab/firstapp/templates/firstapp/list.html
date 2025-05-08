@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'firstapp/list.css' %}">
+</head>
+<body>
+    <div>
+        <h2>List of matching dates</h2>
+        <h3>Click the name for more info</h3>
+        {% for person in profiles %}
+            <a href="{% url 'details' person.id table %}">{{ person.name }}</a>
+        {% empty %}
+            <p>No people found.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

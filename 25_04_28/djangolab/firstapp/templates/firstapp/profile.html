@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Details</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'firstapp/profile.css' %}">
+</head>
+<body>
+    <div class="card">
+        <div class="container">
+            <h1>Details</h1>
+            <h2>Name: {{person.name}}</h2>
+            <p>E-mail: {{person.email}}</p>
+            <p>Biological age: {{person.age.biological_age}}</p>
+            <p>Mental age: {{person.age.mental_age}}</p>
+            <p>I identify as: {{person.age.identified_age}} years old</p>
+        </div>
+        <div class="dependant"></div>
+    </div>
+    <script>
+        const dependantDiv = document.querySelector('.dependant');
+        const gender = "{{metadata}}";
+
+        if (gender === 'firstapp_man') {
+            dependantDiv.innerHTML = `
+                <p>Beard length: {{person.beard_length}}</p>
+                <p>Height: {{person.height}}</p>
+                <p>Amount of hair: {{person.amount_of_hair}}</p>
+            `;
+        } else {
+            dependantDiv.innerHTML = `
+                <p>Protruding ears: {{person.protruding_ears}}</p>
+                <p>Good personality: {{person.good_personality}}</p>
+                <p>Candy Crush level: {{person.candy_crush_level}}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
